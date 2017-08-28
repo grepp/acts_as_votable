@@ -87,7 +87,7 @@ module ActsAsVotable
           votable: self,
           voter: options[:voter],
           vote_scope: options[:vote_scope],
-          voter_type: options[:voter].class.base_class.name)
+          voter_type: options[:voter].class.base_class.name
         )
       else
         # this voter is potentially changing his vote
