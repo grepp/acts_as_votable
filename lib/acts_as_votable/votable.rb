@@ -59,7 +59,7 @@ module ActsAsVotable
     def default_conditions
       {
         votable_id: self.id,
-        votable_type: self.class.base_class.name.to_s
+        votable_type: self.class.name.to_s
       }
     end
 
@@ -79,7 +79,7 @@ module ActsAsVotable
       # find the vote
       votes = find_votes_for(voter_id: options[:voter].id,
         vote_scope: options[:vote_scope],
-        voter_type: options[:voter].class.base_class.name)
+        voter_type: options[:voter].class.name)
 
       if votes.count == (0) || options[:duplicate]
         # this voter has never voted
@@ -87,7 +87,7 @@ module ActsAsVotable
           votable: self,
           voter: options[:voter],
           vote_scope: options[:vote_scope],
-          voter_type: options[:voter].class.base_class.name
+          voter_type: options[:voter].class.name
         )
       else
         # this voter is potentially changing his vote
@@ -113,7 +113,7 @@ module ActsAsVotable
 
     def unvote(args = {})
       return false if args[:voter].nil?
-      votes = find_votes_for(voter_id: args[:voter].id, vote_scope: args[:vote_scope], voter_type: args[:voter].class.base_class.name)
+      votes = find_votes_for(voter_id: args[:voter].id, vote_scope: args[:vote_scope], voter_type: args[:voter].class.name)
 
       return true if votes.size == 0
       votes.each(&:destroy)
@@ -151,7 +151,7 @@ module ActsAsVotable
 
     # voters
     def voted_on_by?(voter)
-      votes = find_votes_for voter_id: voter.id, voter_type: voter.class.base_class.name
+      votes = find_votes_for voter_id: voter.id, voter_type: voter.class.name
       votes.count > 0
     end
 
